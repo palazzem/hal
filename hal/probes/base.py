@@ -1,7 +1,5 @@
 import logging
 
-from .exporters import logger
-
 
 log = logging.getLogger(__name__)
 
@@ -29,7 +27,7 @@ class BaseProbe(object):
         probe.export()
     """
 
-    BASE_DEFAULTS = {"exporter": logger}
+    BASE_DEFAULTS = {"exporters": []}
 
     def __init__(self, config=None, defaults=None):
         config = config or {}
@@ -55,8 +53,8 @@ class BaseProbe(object):
         if self.results is None or self.results == "":
             log.warning("export() executed but no results are available in the probe.")
 
-        export = self.config["exporter"]
         try:
-            export(self.results)
+            for exporter in self.config["exporters"]:
+                exporter.send(self.results)
         except TypeError:
             log.error("Exporter not available for this probe.")
