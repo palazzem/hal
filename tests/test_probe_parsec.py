@@ -69,7 +69,12 @@ def test_parsec_success(server):
 
 def test_parsec_fail(server, caplog):
     """Should fail if an invalid session ID is used."""
-    server.add(responses.GET, "https://parsecgaming.com/v1/me", body="Session invalid.", status=403)
+    server.add(
+        responses.GET,
+        "https://parsecgaming.com/v1/me",
+        body="Session invalid.",
+        status=403,
+    )
     probe = ParsecProbe({"session_id": "invalid"})
     with caplog.at_level(logging.ERROR):
         probe.run()
