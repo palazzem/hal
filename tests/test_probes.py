@@ -18,6 +18,14 @@ def test_base_probe_config():
     assert probe.config == {"test": "branch", "exporter": "new"}
 
 
+def test_base_probe_with_defaults():
+    """Should be possible to add extra configuration that overrides defaults hierarchy."""
+    defaults = {"test": "branch"}
+    config = {"exporter": "new"}
+    probe = BaseProbe(config=config, defaults=defaults)
+    assert probe.config == {"test": "branch", "exporter": "new"}
+
+
 def test_base_probe_run():
     """Should raise a NotImplementedError."""
     probe = BaseProbe()
