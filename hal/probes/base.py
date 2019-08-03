@@ -29,11 +29,12 @@ class BaseProbe(object):
         probe.export()
     """
 
-    DEFAULTS = {"exporter": logger}
+    BASE_DEFAULTS = {"exporter": logger}
 
-    def __init__(self, config=None):
+    def __init__(self, config=None, defaults=None):
         config = config or {}
-        self.config = {**BaseProbe.DEFAULTS, **config}
+        defaults = defaults or {}
+        self.config = {**BaseProbe.BASE_DEFAULTS, **defaults, **config}
         self.results = None
 
     def run(self):
