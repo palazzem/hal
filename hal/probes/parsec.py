@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class ParsecProbe(BaseProbe):
-    """TODO"""
+    """Parsec probe collects data from a Parsec API.
+    A session ID (access token) is required to authorize the user. The API
+    is not officially supported, so the probe may break. A valid session ID can be
+    extracted from a browser session, under the `parsec_login` secure cookie.
+    """
 
     DEFAULTS = {
         "session_id": None,
