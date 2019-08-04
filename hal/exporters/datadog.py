@@ -38,3 +38,5 @@ class DatadogExporter(BaseExporter):
                     "DatadogExporter: unable to send metric. Server response was '%s'",
                     response,
                 )
+            else:
+                log.info("DatadogExporter: metric '%s' sent correctly", k)

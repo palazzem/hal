@@ -51,16 +51,17 @@ def test_base_probe_export_no_results(caplog):
         assert len(caplog.records) == 1
         for record in caplog.records:
             assert record.levelname == "WARNING"
-            assert "no results are available" in record.message
+            assert "no results available" in record.message
 
 
 def test_base_probe_bad_exporter(caplog):
     """Should log an error without raising exceptions if the exporter is not valid."""
     probe = BaseProbe({"exporters": None})
+    probe.results = 42
     with caplog.at_level(logging.ERROR):
         probe.export()
 
         assert len(caplog.records) == 1
         for record in caplog.records:
             assert record.levelname == "ERROR"
-            assert "not available" in record.message
+            assert "exporters are not valid" in record.message

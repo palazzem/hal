@@ -1,5 +1,8 @@
 class BaseExporter(object):
-    """BaseExporter defines the interface to send probe data to an external system."""
+    """BaseExporter defines the interface to send probe data to an external system.
+    This class must be implemented by overriding the following methods:
+      * ``send()``: defines what is sent to the external service.
+    """
 
     DEFAULTS = {}
 

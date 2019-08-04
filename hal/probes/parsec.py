@@ -23,11 +23,10 @@ class ParsecProbe(BaseProbe):
     def __init__(self, config=None):
         super().__init__(config=config, defaults=ParsecProbe.DEFAULTS)
 
-    def run(self):
-        if self.config["session_id"] is None:
-            # Missing session ID results in a 401. Bail out.
-            log.error("ParsecProbe: run failed for missing 'session_id'")
-            return False
+    def _run(self):
+        if not self.config["session_id"]:
+            # Missing session ID results in a 403. Bail out.
+            return False, "run failed for missing 'session_id'"
 
         # Call Parsec API to scrape data
         headers = {self.config["header_key"]: self.config["session_id"]}
@@ -39,7 +38,6 @@ class ParsecProbe(BaseProbe):
                 "hal.parsec.play_time": json_resp["play_time"],
                 "hal.parsec.credits": json_resp["credits"],
             }
-            return True
+            return True, None
         else:
-            log.error("ParsecProbe: run failed. Server returns '%s'", response.text)
-            return False
+            return False, "run failed. Server returns '{}'".format(response.text)
