@@ -5,7 +5,7 @@ class BaseExporter(object):
 
     def __init__(self, config=None):
         config = config or {}
-        self.config = {**BaseExporter.DEFAULTS, **config}
+        self.config = {**self.DEFAULTS, **config}
 
     def send(self, data):
         """Send must be implemented in the child class to define how data is serialized

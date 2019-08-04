@@ -36,8 +36,8 @@ class ParsecProbe(BaseProbe):
         if response.status_code == 200:
             json_resp = response.json()
             self.results = {
-                "play_time": json_resp["play_time"],
-                "credits": json_resp["credits"],
+                "hal.parsec.play_time": json_resp["play_time"],
+                "hal.parsec.credits": json_resp["credits"],
             }
             return True
         else:
