@@ -63,8 +63,8 @@ def test_parsec_success(server):
     probe = ParsecProbe({"session_id": "valid"})
     probe.run()
     assert len(probe.results) == 2
-    assert probe.results["play_time"] == 5000
-    assert probe.results["credits"] == 100
+    assert probe.results["hal.parsec.play_time"] == 5000
+    assert probe.results["hal.parsec.credits"] == 100
 
 
 def test_parsec_fail(server, caplog):
