@@ -4,7 +4,7 @@ from hal.probes.parsec import ParsecProbe
 from hal.exporters.datadog import DatadogExporter
 
 
-def entrypoint():
+def entrypoint(event, context):
     """Cloud Function entrypoint to retrieve data from Parsec Gaming.
 
     Environment variables configuration:
@@ -12,6 +12,10 @@ def entrypoint():
       * `DD_HOSTNAME` (default `hal`): Hostname used for the Datadog metric.
       * `PARSEC_TAGS` (default `None`): Add tags to Datadog metrics.
       * `PARSEC_TOKEN`: Token extracted from a browser session.
+
+    Args:
+         event (dict): Event payload.
+         context (google.cloud.functions.Context): Metadata for the event.
     """
     config = {
         "session_id": getenv("PARSEC_TOKEN"),
