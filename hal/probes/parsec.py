@@ -20,9 +20,6 @@ class ParsecProbe(BaseProbe):
         "header_key": "X-Parsec-Session-Id",
     }
 
-    def __init__(self, config=None):
-        super().__init__(config=config, defaults=ParsecProbe.DEFAULTS)
-
     def _run(self):
         if not self.config["session_id"]:
             # Missing session ID results in a 403. Bail out.

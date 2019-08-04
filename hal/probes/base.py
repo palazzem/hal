@@ -30,12 +30,12 @@ class BaseProbe(object):
         probe.export()
     """
 
+    DEFAULTS = {}
     BASE_DEFAULTS = {"exporters": []}
 
-    def __init__(self, config=None, defaults=None):
+    def __init__(self, config=None):
         config = config or {}
-        defaults = defaults or {}
-        self.config = {**BaseProbe.BASE_DEFAULTS, **defaults, **config}
+        self.config = {**BaseProbe.BASE_DEFAULTS, **self.DEFAULTS, **config}
         self.results = None
 
     def _run(self):

@@ -19,9 +19,7 @@ def test_base_probe_config():
 
 def test_base_probe_with_defaults():
     """Should be possible to add extra configuration that overrides defaults hierarchy."""
-    defaults = {"test": "branch"}
-    config = {"exporters": []}
-    probe = BaseProbe(config=config, defaults=defaults)
+    probe = BaseProbe({"test": "branch"})
     assert probe.config == {"test": "branch", "exporters": []}
 
 
