@@ -109,6 +109,16 @@ def test_datadog_exporter_send_metric_tags_with_config(mocker):
     }
 
 
+def test_datadog_exporter_send_empty_metrics(mocker):
+    """Should not send any metric if Probe results are empty."""
+    mocker.patch("datadog.api.Metric.send")
+    exporter = DatadogExporter({"api_key": "valid", "hostname": "home"})
+    exporter.send({"metric_1": []})
+
+    # Two different metrics must be sent
+    assert datadog.api.Metric.send.call_count == 0
+
+
 def test_datadog_exporter_send_fail(mocker, caplog):
     """Should log an error if the response is not a 200."""
     mocker.patch("datadog.api.Metric.send").return_value = {"status": "error"}

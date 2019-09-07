@@ -51,6 +51,9 @@ class PaperspaceProbe(BaseProbe):
         # Metric: number of registered machines
         self.results["hal.paperspace.machines.count"] = len(machines)
         self.results["hal.paperspace.machines.instance"] = []
+        self.results["hal.paperspace.utilization.instance.usage_seconds"] = []
+        self.results["hal.paperspace.utilization.instance.hourly_rate"] = []
+        self.results["hal.paperspace.utilization.storage.monthly_rate"] = []
 
         for machine in machines:
             # Metric: state of the instance (off/ready)
@@ -88,21 +91,27 @@ class PaperspaceProbe(BaseProbe):
 
             billing = response.json()
             # Metric: usage (in seconds) for the given machine
-            self.results["hal.paperspace.utilization.instance.usage_seconds"] = (
-                int(billing["utilization"]["secondsUsed"]),
-                ["machine_id:{}".format(machine["id"])],
+            self.results["hal.paperspace.utilization.instance.usage_seconds"].append(
+                (
+                    int(billing["utilization"]["secondsUsed"]),
+                    ["machine_id:{}".format(machine["id"])],
+                )
             )
 
             # Metric: hourly rate for the given machine
-            self.results["hal.paperspace.utilization.instance.hourly_rate"] = (
-                float(billing["utilization"]["hourlyRate"]),
-                ["machine_id:{}".format(machine["id"])],
+            self.results["hal.paperspace.utilization.instance.hourly_rate"].append(
+                (
+                    float(billing["utilization"]["hourlyRate"]),
+                    ["machine_id:{}".format(machine["id"])],
+                )
             )
 
             # Metric: monthly rate for the attached storage
-            self.results["hal.paperspace.utilization.storage.monthly_rate"] = (
-                float(billing["storageUtilization"]["monthlyRate"]),
-                ["machine_id:{}".format(machine["id"])],
+            self.results["hal.paperspace.utilization.storage.monthly_rate"].append(
+                (
+                    float(billing["storageUtilization"]["monthlyRate"]),
+                    ["machine_id:{}".format(machine["id"])],
+                )
             )
 
         return True, None

@@ -87,18 +87,15 @@ def test_paperspace_success(server):
         (1, ["machine_id:unique_id", "state:off"]),
         (0, ["machine_id:unique_id", "state:ready"]),
     ]
-    assert probe.results["hal.paperspace.utilization.instance.usage_seconds"] == (
-        23808,
-        ["machine_id:unique_id"],
-    )
-    assert probe.results["hal.paperspace.utilization.instance.hourly_rate"] == (
-        0.78,
-        ["machine_id:unique_id"],
-    )
-    assert probe.results["hal.paperspace.utilization.storage.monthly_rate"] == (
-        10.0,
-        ["machine_id:unique_id"],
-    )
+    assert probe.results["hal.paperspace.utilization.instance.usage_seconds"] == [
+        (23808, ["machine_id:unique_id"])
+    ]
+    assert probe.results["hal.paperspace.utilization.instance.hourly_rate"] == [
+        (0.78, ["machine_id:unique_id"])
+    ]
+    assert probe.results["hal.paperspace.utilization.storage.monthly_rate"] == [
+        (10.0, ["machine_id:unique_id"])
+    ]
 
 
 def test_paperspace_transition_state(server):
@@ -207,7 +204,7 @@ def test_paperspace_fail_machine(server, caplog):
     with caplog.at_level(logging.ERROR):
         probe.run()
 
-        assert len(probe.results) == 2
+        assert len(probe.results) == 5
         assert len(caplog.records) == 1
         for record in caplog.records:
             assert record.levelname == "ERROR"
