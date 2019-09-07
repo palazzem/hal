@@ -28,9 +28,11 @@ def test_log_exporter(caplog):
 def test_datadog_exporter_client_config(mocker):
     """Should configure Datadog client with the given API_KEY."""
     mocker.patch("datadog.initialize")
-    DatadogExporter({"api_key": "test_api_key"})
+    DatadogExporter({"api_key": "test_api_key", "hostname": "hal"})
     assert datadog.initialize.call_count == 1
-    assert datadog.initialize.call_args == ({"api_key": "test_api_key"},)
+    assert datadog.initialize.call_args == (
+        {"api_key": "test_api_key", "host_name": "hal"},
+    )
 
 
 def test_datadog_exporter_missing_api_key(caplog):
@@ -56,19 +58,9 @@ def test_datadog_exporter_send(mocker):
     # Two different metrics must be sent
     assert datadog.api.Metric.send.call_count == 2
     _, kwargs = datadog.api.Metric.send.call_args_list[0]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_1",
-        "points": 1,
-        "tags": ["automation"],
-    }
+    assert kwargs == {"metric": "metric_1", "points": 1, "tags": ["automation"]}
     _, kwargs = datadog.api.Metric.send.call_args_list[1]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_2",
-        "points": 2,
-        "tags": ["automation"],
-    }
+    assert kwargs == {"metric": "metric_2", "points": 2, "tags": ["automation"]}
 
 
 def test_datadog_exporter_send_metric_tags(mocker):
@@ -80,19 +72,9 @@ def test_datadog_exporter_send_metric_tags(mocker):
     # Two different metrics must be sent
     assert datadog.api.Metric.send.call_count == 2
     _, kwargs = datadog.api.Metric.send.call_args_list[0]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_1",
-        "points": 1,
-        "tags": ["tag_1"],
-    }
+    assert kwargs == {"metric": "metric_1", "points": 1, "tags": ["tag_1"]}
     _, kwargs = datadog.api.Metric.send.call_args_list[1]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_2",
-        "points": 2,
-        "tags": ["tag_2"],
-    }
+    assert kwargs == {"metric": "metric_2", "points": 2, "tags": ["tag_2"]}
 
 
 def test_datadog_exporter_send_multiple_metric(mocker):
@@ -104,19 +86,9 @@ def test_datadog_exporter_send_multiple_metric(mocker):
     # Two different metrics must be sent
     assert datadog.api.Metric.send.call_count == 2
     _, kwargs = datadog.api.Metric.send.call_args_list[0]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_1",
-        "points": 0,
-        "tags": ["state:off"],
-    }
+    assert kwargs == {"metric": "metric_1", "points": 0, "tags": ["state:off"]}
     _, kwargs = datadog.api.Metric.send.call_args_list[1]
-    assert kwargs == {
-        "host": "home",
-        "metric": "metric_1",
-        "points": 1,
-        "tags": ["state:on"],
-    }
+    assert kwargs == {"metric": "metric_1", "points": 1, "tags": ["state:on"]}
 
 
 def test_datadog_exporter_send_metric_tags_with_config(mocker):
@@ -131,7 +103,6 @@ def test_datadog_exporter_send_metric_tags_with_config(mocker):
     assert datadog.api.Metric.send.call_count == 1
     _, kwargs = datadog.api.Metric.send.call_args_list[0]
     assert kwargs == {
-        "host": "home",
         "metric": "metric_1",
         "points": 1,
         "tags": ["automation", "tag_1"],

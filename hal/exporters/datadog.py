@@ -23,7 +23,9 @@ class DatadogExporter(BaseExporter):
 
     def __init__(self, config=None):
         super().__init__(config)
-        datadog.initialize(api_key=self.config["api_key"])
+        datadog.initialize(
+            api_key=self.config["api_key"], host_name=self.config["hostname"]
+        )
 
     def send(self, data):
         # Validate configuration
@@ -44,6 +46,7 @@ class DatadogExporter(BaseExporter):
                 v = [v]
 
             for metric in v:
+                # For each metric, detect if multiple tags are available
                 if isinstance(metric, tuple):
                     points = metric[0]
                     tags = (self.config["tags"] or []) + metric[1]
@@ -51,10 +54,8 @@ class DatadogExporter(BaseExporter):
                     points = metric
                     tags = self.config["tags"]
 
-                response = datadog.api.Metric.send(
-                    host=self.config["hostname"], tags=tags, metric=k, points=points
-                )
-
+                # NOTE: Hostname is automatically attached from config
+                response = datadog.api.Metric.send(tags=tags, metric=k, points=points)
                 if response.get("status") != "ok":
                     log.error(
                         "DatadogExporter: unable to send metric. Server response was '%s'",
