@@ -49,7 +49,7 @@ def test_datadog_exporter_send(mocker):
     """Should send probe data to Datadog."""
     mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
     exporter = DatadogExporter(
-        {"api_key": "valid", "hostname": "home", "tags": "automation"}
+        {"api_key": "valid", "hostname": "home", "tags": ["automation"]}
     )
     exporter.send({"metric_1": 1, "metric_2": 2})
 
@@ -60,14 +60,61 @@ def test_datadog_exporter_send(mocker):
         "host": "home",
         "metric": "metric_1",
         "points": 1,
-        "tags": "automation",
+        "tags": ["automation"],
     }
     _, kwargs = datadog.api.Metric.send.call_args_list[1]
     assert kwargs == {
         "host": "home",
         "metric": "metric_2",
         "points": 2,
-        "tags": "automation",
+        "tags": ["automation"],
+    }
+
+
+def test_datadog_exporter_send_metric_tags(mocker):
+    """Should send Datadog metrics with different tags."""
+    mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
+    exporter = DatadogExporter(
+        # TODO add this as another test
+        # {"api_key": "valid", "hostname": "home", "tags": "automation"}
+        {"api_key": "valid", "hostname": "home"}
+    )
+    exporter.send({"metric_1": (1, ["tag_1"]), "metric_2": (2, ["tag_2"])})
+
+    # Two different metrics must be sent
+    assert datadog.api.Metric.send.call_count == 2
+    _, kwargs = datadog.api.Metric.send.call_args_list[0]
+    assert kwargs == {
+        "host": "home",
+        "metric": "metric_1",
+        "points": 1,
+        "tags": ["tag_1"],
+    }
+    _, kwargs = datadog.api.Metric.send.call_args_list[1]
+    assert kwargs == {
+        "host": "home",
+        "metric": "metric_2",
+        "points": 2,
+        "tags": ["tag_2"],
+    }
+
+
+def test_datadog_exporter_send_metric_tags_with_config(mocker):
+    """Should send Datadog metrics with different tags merged with config."""
+    mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
+    exporter = DatadogExporter(
+        {"api_key": "valid", "hostname": "home", "tags": ["automation"]}
+    )
+    exporter.send({"metric_1": (1, ["tag_1"])})
+
+    # Two different metrics must be sent
+    assert datadog.api.Metric.send.call_count == 1
+    _, kwargs = datadog.api.Metric.send.call_args_list[0]
+    assert kwargs == {
+        "host": "home",
+        "metric": "metric_1",
+        "points": 1,
+        "tags": ["automation", "tag_1"],
     }
 
 
@@ -82,3 +129,18 @@ def test_datadog_exporter_send_fail(mocker, caplog):
         for record in caplog.records:
             assert record.levelname == "ERROR"
             assert "unable to send metric" in record.message
+
+
+def test_datadog_exporter_send_fail_tags(mocker, caplog):
+    """Should log an error if tags are not a list of strings."""
+    mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
+    with caplog.at_level(logging.ERROR):
+        exporter = DatadogExporter(
+            {"api_key": "valid", "hostname": "home", "tags": "automation"}
+        )
+        exporter.send({"metric_1": 1})
+
+        assert len(caplog.records) == 1
+        for record in caplog.records:
+            assert record.levelname == "ERROR"
+            assert "'tags' must be a list of strings" in record.message

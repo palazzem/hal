@@ -12,6 +12,11 @@ class DatadogExporter(BaseExporter):
     is used as a metric name, so the naming of your keys is important. As example, if
     the result dictionary is ``{"hal.metric": 42}`` the exporter sends a metric
     named ``hal.metric``.
+
+    If the metric has custom tags, it's possible to use a tuble as a dict value:
+    ``{"hal.metric": (42, ["tag_1"])}``. In that case, the metric ``hal.metric`` has
+    ``42`` as data point and ``tag_1`` as tag. In case ``tags`` in the exporter configuration
+    is set, the lists are merged.
     """
 
     DEFAULTS = {"api_key": None, "hostname": None, "tags": None}
@@ -21,16 +26,27 @@ class DatadogExporter(BaseExporter):
         datadog.initialize(api_key=self.config["api_key"])
 
     def send(self, data):
+        # Validate configuration
         if self.config["api_key"] is None:
             log.error("DatadogExporter: api_key is not configured.")
             return
 
+        if self.config["tags"] is not None and not isinstance(
+            self.config["tags"], list
+        ):
+            log.error("DatadogExporter: 'tags' must be a list of strings.")
+            return
+
         for k, v in data.items():
+            if isinstance(v, tuple):
+                points = v[0]
+                tags = (self.config["tags"] or []) + v[1]
+            else:
+                points = v
+                tags = self.config["tags"]
+
             response = datadog.api.Metric.send(
-                host=self.config["hostname"],
-                tags=self.config["tags"],
-                metric=k,
-                points=v,
+                host=self.config["hostname"], tags=tags, metric=k, points=points
             )
 
             if response.get("status") != "ok":
