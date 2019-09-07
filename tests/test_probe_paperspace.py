@@ -83,10 +83,10 @@ def test_paperspace_success(server):
     probe.run()
     assert len(probe.results) == 5
     assert probe.results["hal.paperspace.machines.count"] == 1
-    assert probe.results["hal.paperspace.machines.instance"] == (
-        1,
-        ["machine_id:unique_id", "state:off"],
-    )
+    assert probe.results["hal.paperspace.machines.instance"] == [
+        (1, ["machine_id:unique_id", "state:off"]),
+        (0, ["machine_id:unique_id", "state:ready"]),
+    ]
     assert probe.results["hal.paperspace.utilization.instance.usage_seconds"] == (
         23808,
         ["machine_id:unique_id"],
@@ -99,6 +99,46 @@ def test_paperspace_success(server):
         10.0,
         ["machine_id:unique_id"],
     )
+
+
+def test_paperspace_transition_state(server):
+    """Should emit an extra metric if a transition state is active."""
+    machines_list = """
+      [{"id": "unique_id",
+        "state": "starting"}]
+    """
+    machine_utilization = """
+      {"machineId": "unique_id",
+       "utilization": {"machineId": "unique_id",
+        "secondsUsed": 23808.9384539127,
+        "hourlyRate": "0.78",
+        "billingMonth": "2019-09"},
+       "storageUtilization": {"machineId": "unique_id",
+        "secondsUsed": 416854.609315872,
+        "monthlyRate": "10.00",
+        "billingMonth": "2019-09"}}
+    """
+    server.add(
+        responses.GET,
+        "https://api.paperspace.io/machines/getMachines",
+        body=machines_list,
+        status=200,
+    )
+    server.add(
+        responses.GET,
+        "https://api.paperspace.io/machines/getUtilization",
+        body=machine_utilization,
+        status=200,
+    )
+    probe = PaperspaceProbe({"api_key": "valid"})
+    probe.run()
+    assert len(probe.results) == 5
+    assert probe.results["hal.paperspace.machines.count"] == 1
+    assert probe.results["hal.paperspace.machines.instance"] == [
+        (0, ["machine_id:unique_id", "state:off"]),
+        (0, ["machine_id:unique_id", "state:ready"]),
+        (1, ["machine_id:unique_id", "state:starting"]),
+    ]
 
 
 def test_paperspace_fail(server, caplog):

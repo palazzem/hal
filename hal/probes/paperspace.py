@@ -50,16 +50,29 @@ class PaperspaceProbe(BaseProbe):
 
         # Metric: number of registered machines
         self.results["hal.paperspace.machines.count"] = len(machines)
+        self.results["hal.paperspace.machines.instance"] = []
 
         for machine in machines:
-            # Metric: state of each instance
-            self.results["hal.paperspace.machines.instance"] = (
-                1,
-                [
-                    "machine_id:{}".format(machine["id"]),
-                    "state:{}".format(machine["state"]),
-                ],
+            # Metric: state of the instance (off/ready)
+            is_off = int(machine["state"] == "off")
+            is_ready = int(machine["state"] == "ready")
+            self.results["hal.paperspace.machines.instance"].append(
+                (is_off, ["machine_id:{}".format(machine["id"]), "state:off"])
             )
+            self.results["hal.paperspace.machines.instance"].append(
+                (is_ready, ["machine_id:{}".format(machine["id"]), "state:ready"])
+            )
+            # Metric: report other temporary state
+            if not is_off and not is_ready:
+                self.results["hal.paperspace.machines.instance"].append(
+                    (
+                        1,
+                        [
+                            "machine_id:{}".format(machine["id"]),
+                            "state:{}".format(machine["state"]),
+                        ],
+                    )
+                )
 
             # Get machine utilization data for the machine with the given ID
             url = "{}/{}".format(self.config["base_url"], "machines/getUtilization")
