@@ -38,21 +38,27 @@ class DatadogExporter(BaseExporter):
             return
 
         for k, v in data.items():
-            if isinstance(v, tuple):
-                points = v[0]
-                tags = (self.config["tags"] or []) + v[1]
-            else:
-                points = v
-                tags = self.config["tags"]
+            # Convert the metric data points in a list of metrics
+            # to allow sending multiple metrics with the same name
+            if not isinstance(v, list):
+                v = [v]
 
-            response = datadog.api.Metric.send(
-                host=self.config["hostname"], tags=tags, metric=k, points=points
-            )
+            for metric in v:
+                if isinstance(metric, tuple):
+                    points = metric[0]
+                    tags = (self.config["tags"] or []) + metric[1]
+                else:
+                    points = metric
+                    tags = self.config["tags"]
 
-            if response.get("status") != "ok":
-                log.error(
-                    "DatadogExporter: unable to send metric. Server response was '%s'",
-                    response,
+                response = datadog.api.Metric.send(
+                    host=self.config["hostname"], tags=tags, metric=k, points=points
                 )
-            else:
-                log.info("DatadogExporter: metric '%s' sent correctly", k)
+
+                if response.get("status") != "ok":
+                    log.error(
+                        "DatadogExporter: unable to send metric. Server response was '%s'",
+                        response,
+                    )
+                else:
+                    log.info("DatadogExporter: metric '%s' sent correctly", k)

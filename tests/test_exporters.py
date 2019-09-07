@@ -74,11 +74,7 @@ def test_datadog_exporter_send(mocker):
 def test_datadog_exporter_send_metric_tags(mocker):
     """Should send Datadog metrics with different tags."""
     mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
-    exporter = DatadogExporter(
-        # TODO add this as another test
-        # {"api_key": "valid", "hostname": "home", "tags": "automation"}
-        {"api_key": "valid", "hostname": "home"}
-    )
+    exporter = DatadogExporter({"api_key": "valid", "hostname": "home"})
     exporter.send({"metric_1": (1, ["tag_1"]), "metric_2": (2, ["tag_2"])})
 
     # Two different metrics must be sent
@@ -96,6 +92,30 @@ def test_datadog_exporter_send_metric_tags(mocker):
         "metric": "metric_2",
         "points": 2,
         "tags": ["tag_2"],
+    }
+
+
+def test_datadog_exporter_send_multiple_metric(mocker):
+    """Should send Datadog metrics with the same name."""
+    mocker.patch("datadog.api.Metric.send").return_value = {"status": "ok"}
+    exporter = DatadogExporter({"api_key": "valid", "hostname": "home"})
+    exporter.send({"metric_1": [(0, ["state:off"]), (1, ["state:on"])]})
+
+    # Two different metrics must be sent
+    assert datadog.api.Metric.send.call_count == 2
+    _, kwargs = datadog.api.Metric.send.call_args_list[0]
+    assert kwargs == {
+        "host": "home",
+        "metric": "metric_1",
+        "points": 0,
+        "tags": ["state:off"],
+    }
+    _, kwargs = datadog.api.Metric.send.call_args_list[1]
+    assert kwargs == {
+        "host": "home",
+        "metric": "metric_1",
+        "points": 1,
+        "tags": ["state:on"],
     }
 
 
