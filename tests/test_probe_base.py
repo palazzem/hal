@@ -8,7 +8,7 @@ def test_base_probe():
     """Should be initializable with a default config."""
     probe = BaseProbe()
     assert len(probe.config["exporters"]) == 0
-    assert probe.results is None
+    assert probe.results == {}
 
 
 def test_base_probe_config():

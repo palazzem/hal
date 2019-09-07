@@ -79,7 +79,7 @@ def test_parsec_fail(server, caplog):
     with caplog.at_level(logging.ERROR):
         probe.run()
 
-        assert probe.results is None
+        assert probe.results == {}
         assert len(caplog.records) == 1
         for record in caplog.records:
             assert record.levelname == "ERROR"

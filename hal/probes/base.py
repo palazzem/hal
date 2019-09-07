@@ -36,7 +36,7 @@ class BaseProbe(object):
     def __init__(self, config=None):
         config = config or {}
         self.config = {**BaseProbe.BASE_DEFAULTS, **self.DEFAULTS, **config}
-        self.results = None
+        self.results = {}
 
     def _run(self):
         """Defines the probe logic. This method must be implemented in the child class, and probe
