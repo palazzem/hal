@@ -4,10 +4,10 @@
 #
 #    pip-compile requirements.in
 #
-certifi==2019.6.16        # via requests
+certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
-datadog==0.29.3
-decorator==4.4.0          # via datadog
+datadog==0.31.0
+decorator==4.4.1          # via datadog
 idna==2.8                 # via requests
 requests==2.22.0
-urllib3==1.25.3           # via requests
+urllib3==1.25.7           # via requests
