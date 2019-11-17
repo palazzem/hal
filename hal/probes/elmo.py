@@ -1,6 +1,7 @@
 import logging
 
 from elmo.api.client import ElmoClient
+from requests.exceptions import HTTPError
 
 from .base import BaseProbe
 
@@ -29,9 +30,12 @@ class ElmoProbe(BaseProbe):
             return False, "run failed for missing credentials"
 
         # Access Elmo and get the system status
-        client = ElmoClient(self.config["base_url"], self.config["vendor"])
-        client.auth(self.config["username"], self.config["password"])
-        status = client.check()
+        try:
+            client = ElmoClient(self.config["base_url"], self.config["vendor"])
+            client.auth(self.config["username"], self.config["password"])
+            status = client.check()
+        except HTTPError as e:
+            return False, "run failed. ElmoClient returns '{}'".format(e)
 
         # Metrics: collect armed/disarmed areas and system inputs status
         self.results["hal.elmo.areas"] = []
