@@ -8,7 +8,6 @@ commands:
     steps:
       # Install test dependencies and parametrize tox execution
       - checkout
-      - run: sudo apt install python3.7-dev
       - run: sudo pip install tox codecov
       - run: tox -e << parameters.env >> && codecov
 
@@ -19,9 +18,15 @@ jobs:
     steps:
       - run-tox:
           env: "py37"
+  test-py38:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - run-tox:
+          env: "py38"
   lint:
     docker:
-      - image: circleci/python:latest
+      - image: circleci/python:3.8
     steps:
       - run-tox:
           env: "lint"
@@ -30,4 +35,5 @@ workflows:
   build:
     jobs:
       - test-py37
+      - test-py38
       - lint
