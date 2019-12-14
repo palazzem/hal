@@ -10,8 +10,9 @@ def entrypoint(event, context):
 
     Environment variables configuration:
       * `DD_API_KEY`: Datadog API key.
-      * `DD_HOSTNAME` (default `hal`): Hostname used for the Datadog metric.
-      * `WATCHDOG_HOSTS` (default `[]`): List of hostnames or IP addresses to check
+      * `DD_HOSTNAME` (default `hal`): Hostname used for the Datadog metric. It has the format:
+        `127.0.0.1|name:hal another-address|name:system`
+      * `WATCHDOG_HOSTS` (default `[]`): List of hostnames or IP addresses to check.
       * `WATCHDOG_TAGS` (default `None`): Add tags to all Datadog metrics.
 
     Args:
@@ -19,7 +20,12 @@ def entrypoint(event, context):
          context (google.cloud.functions.Context): Metadata for the event.
     """
     config = {
-        "hosts": getenv("WATCHDOG_HOSTS", "").split(),
+        # TODO: Such king of logic must be isolated in a settings system.
+        # Check: https://github.com/palazzem/hal/issues/29
+        "hosts": [
+            (y[0], y[1])
+            for y in [x.split("|") for x in getenv("WATCHDOG_HOSTS", "").split()]
+        ],
         "exporters": [
             DatadogExporter(
                 {
