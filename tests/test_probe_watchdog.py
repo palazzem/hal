@@ -27,49 +27,63 @@ def test_watchdog_success(mocker):
     """Should succeed with valid hosts to monitor."""
     process = mocker.patch("subprocess.run")
     process.return_value.returncode = 0
-    probe = WatchdogProbe({"hosts": ["127.0.0.1"]})
+    probe = WatchdogProbe({"hosts": [("127.0.0.1", "test")]})
     probe.run()
     assert len(probe.results) == 1
-    assert probe.results["hal.watchdog.detected_hosts"] == 1
+    assert len(probe.results["hal.watchdog.detected_hosts"]) == 1
+    assert probe.results["hal.watchdog.detected_hosts"][0] == (1, ["test"])
 
 
 def test_watchdog_multiple_hosts(mocker):
     """Should detect multiple hosts."""
     process = mocker.patch("subprocess.run")
     process.return_value.returncode = 0
-    probe = WatchdogProbe({"hosts": ["127.0.0.1", "127.0.0.1"]})
+    probe = WatchdogProbe({"hosts": [("127.0.0.1", "system"), ("127.0.0.1", "hal")]})
     probe.run()
     assert len(probe.results) == 1
-    assert probe.results["hal.watchdog.detected_hosts"] == 2
+    assert len(probe.results["hal.watchdog.detected_hosts"]) == 2
+    assert probe.results["hal.watchdog.detected_hosts"][0] == (1, ["system"])
+    assert probe.results["hal.watchdog.detected_hosts"][1] == (1, ["hal"])
+
+
+def test_watchdog_multiple_hosts_same_tag(mocker):
+    """Should detect multiple hosts, grouping by tag."""
+    process = mocker.patch("subprocess.run")
+    process.return_value.returncode = 0
+    probe = WatchdogProbe({"hosts": [("127.0.0.1", "system"), ("127.0.0.1", "system")]})
+    probe.run()
+    assert len(probe.results) == 1
+    assert len(probe.results["hal.watchdog.detected_hosts"]) == 1
+    assert probe.results["hal.watchdog.detected_hosts"][0] == (2, ["system"])
 
 
 def test_watchdog_partial_failure(mocker):
     """Should report only detected hosts."""
     process = mocker.patch("subprocess.run")
     type(process.return_value).returncode = mocker.PropertyMock(side_effect=[0, 1])
-    probe = WatchdogProbe({"hosts": ["127.0.0.1", "invalid-host"]})
+    probe = WatchdogProbe({"hosts": [("127.0.0.1", "system"), ("invalid-host", "hal")]})
     probe.run()
     assert len(probe.results) == 1
-    assert probe.results["hal.watchdog.detected_hosts"] == 1
+    assert len(probe.results["hal.watchdog.detected_hosts"]) == 1
 
 
 @pytest.mark.xfail
-def test_watchdog_partial_failure_integration(mocker):
+def test_watchdog_partial_failure_integration():
     """Should report only detected hosts. This test runs the `ping` command,
     but in some CI it can fail to prevent DoS. Because of that, the test
     is marked as it can fail.
     """
-    probe = WatchdogProbe({"hosts": ["127.0.0.1", "invalid-host"]})
+    probe = WatchdogProbe({"hosts": [("127.0.0.1", "system"), ("invalid-host", "hal")]})
     probe.run()
     assert len(probe.results) == 1
-    assert probe.results["hal.watchdog.detected_hosts"] == 1
+    assert len(probe.results["hal.watchdog.detected_hosts"]) == 1
 
 
 def test_watchdog_failure(caplog, mocker):
     """Should log a debug entry if it fails."""
     process = mocker.patch("subprocess.run")
     process.return_value.returncode = 1
-    probe = WatchdogProbe({"hosts": ["invalid-host"]})
+    probe = WatchdogProbe({"hosts": [("invalid-host", "hal")]})
     with caplog.at_level(logging.DEBUG):
         result = probe.run()
 
@@ -78,4 +92,4 @@ def test_watchdog_failure(caplog, mocker):
         assert record.levelname == "DEBUG"
         assert "Probe watchdog: host 'invalid-host' not found" in record.message
         assert result is True
-        assert probe.results["hal.watchdog.detected_hosts"] == 0
+        assert len(probe.results["hal.watchdog.detected_hosts"]) == 0
