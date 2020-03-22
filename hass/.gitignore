@@ -1,0 +1,18 @@
+# Blacklist the configuration
+etc/*
+
+# Whitelist files/folders
+!*.yaml
+!.gitignore
+!*.md
+!.HA_VERSION
+
+# Folders that must be ignored
+.storage
+.cloud
+.google.token
+
+# Ensure these YAML files are ignored to prevent a leak
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
