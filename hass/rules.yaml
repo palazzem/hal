@@ -1,0 +1,15 @@
+http:
+  routers:
+    hal:
+      rule: Host(`{{env "HAL_FQDN"}}`)
+      tls:
+        certResolver: le
+      entrypoints:
+        - websecure
+      service: hal
+  services:
+    hal:
+      loadBalancer:
+        servers:
+          # 172.17.0.1 is the `docker0` interface
+          - url: 'http://172.17.0.1:8123'
