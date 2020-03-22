@@ -1,4 +1,3 @@
-
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -10,7 +9,12 @@ default_config:
 tts:
   - platform: google_translate
 
+# Home Assistant
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+# KNX Integration
+knx: !include integrations/knx.yaml
+light: !include integrations/knx_lights.yaml
