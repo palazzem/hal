@@ -1,0 +1,25 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Home Assistant
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Google Assistant
+google_assistant:
+  project_id: !secret google_project_id
+  service_account: !include google/service_account.json
+  report_state: true
+  exposed_domains:
+    - light
+    - scene
+
+# KNX Integration
+knx: !include integrations/knx.yaml
+light: !include integrations/knx_lights.yaml

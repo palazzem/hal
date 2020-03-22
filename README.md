@@ -1,5 +1,6 @@
 # Hal
 
+[![test](https://github.com/palazzem/hal/workflows/test/badge.svg)](https://github.com/palazzem/hal/actions?query=workflow%3Atest)
 [![CircleCI](https://circleci.com/gh/palazzem/hal.svg?style=svg)](https://circleci.com/gh/palazzem/hal)
 [![codecov](https://codecov.io/gh/palazzem/hal/branch/master/graph/badge.svg)](https://codecov.io/gh/palazzem/hal)
 

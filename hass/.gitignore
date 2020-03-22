@@ -1,0 +1,17 @@
+# Folders that must be ignored
+.cloud
+.storage
+deps
+tts
+
+# Ensure these files are ignored to prevent a leak
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+service_account.json
+
+# Logs
+*.log
+
+# Databases
+*.db
