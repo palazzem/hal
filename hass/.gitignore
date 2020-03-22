@@ -8,7 +8,7 @@ tts
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml
-google/service_account.json
+service_account.json
 
 # Logs
 *.log
