@@ -28,6 +28,8 @@ services:
     environment:
       - ACME_EMAIL
       - HAL_FQDN
+      - RATTLESTAR_FQDN
+      - RATTLESTAR_LOCAL_FQDN
     labels:
       # Middleware redirect
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

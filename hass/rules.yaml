@@ -1,13 +1,25 @@
 http:
   routers:
+    rattlestar:
+      service: rattlestar
+      rule: Host(`{{env "RATTLESTAR_FQDN"}}`)
+      tls:
+        certResolver: le
+      entrypoints:
+        - websecure
     hal:
+      service: hal
       rule: Host(`{{env "HAL_FQDN"}}`)
       tls:
         certResolver: le
       entrypoints:
         - websecure
-      service: hal
   services:
+    rattlestar:
+      loadBalancer:
+        servers:
+          # Reverse Proxy to another Traefik service
+          - url: 'https://{{env "RATTLESTAR_LOCAL_FQDN"}}'
     hal:
       loadBalancer:
         servers:
