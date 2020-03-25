@@ -11,6 +11,8 @@ services:
       - --providers.file.filename=/etc/traefik/rules.yaml
       - --entryPoints.web.address=:80
       - --entryPoints.websecure.address=:443
+      # Use Letsencrypt and an internal Root CA for self-signed certificates (mkcert)
+      - --serversTransport.rootCAs=/certs/rootCA.pem
       - --certificatesResolvers.le.acme.email=${ACME_EMAIL}
       - --certificatesResolvers.le.acme.storage=/acme.json
       - --certificatesResolvers.le.acme.tlschallenge=true
@@ -18,9 +20,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ${PWD}/acme.json:/acme.json
-      - ${PWD}/rules.yaml:/etc/traefik/rules.yaml
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Letsencrypt and custom Root CA certificates mounts
+      - ${PWD}/acme.json:/acme.json
+      - ${PWD}/certs/:/certs/
+      - ${PWD}/rules.yaml:/etc/traefik/rules.yaml
     environment:
       - ACME_EMAIL
       - HAL_FQDN
