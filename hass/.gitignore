@@ -5,6 +5,7 @@ deps
 tts
 
 # Ensure these files are ignored to prevent a leak
+certs/
 acme.json
 ip_bans.yaml
 secrets.yaml
