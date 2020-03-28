@@ -1,4 +1,4 @@
 tunneling:
-  host: '192.168.1.250'
+  host: !secret knx_ip
   port: 3671
-  local_ip: '192.168.1.252'
+  local_ip: !secret local_ip

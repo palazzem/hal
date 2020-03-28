@@ -26,6 +26,8 @@ jobs:
         run: |
           mkdir hass/etc/google/
           echo 'google_project_id: dummy' >> hass/etc/secrets.yaml
+          echo 'knx_ip: 10.0.0.1' >> hass/etc/secrets.yaml
+          echo 'local_ip: 10.0.0.1' >> hass/etc/secrets.yaml
           echo '{"client_email": "dummy@account.com", "private_key": "secret"}' > hass/etc/google/service_account.json
       
       - name: Check configuration
