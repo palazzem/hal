@@ -2,7 +2,7 @@ version: '3.7'
 services:
   traefik:
     restart: always
-    image: traefik:v2.2
+    image: traefik:v2.2.0
     container_name: "traefik"
     command:
       - --api.dashboard=false
@@ -39,9 +39,9 @@ services:
       - "traefik.http.routers.redirs.middlewares=redirect-to-https"
 
   home-assistant:
-    restart: unless-stopped
+    restart: always
     container_name: hal
-    image: homeassistant/home-assistant:0.107.4
+    image: homeassistant/home-assistant:0.107.7
     environment:
       - TZ=Europe/Rome
       - UID=${UID}
