@@ -3,6 +3,7 @@
 .storage
 deps
 tts
+etc/customize.yaml
 
 # Ensure these files are ignored to prevent a leak
 certs/

@@ -25,6 +25,7 @@ jobs:
       - name: Create dummy secrets
         run: |
           mkdir hass/etc/google/
+          touch hass/etc/customize.yaml
           echo 'google_project_id: dummy' >> hass/etc/secrets.yaml
           echo 'knx_ip: 10.0.0.1' >> hass/etc/secrets.yaml
           echo 'local_ip: 10.0.0.1' >> hass/etc/secrets.yaml
