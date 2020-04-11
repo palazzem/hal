@@ -1,1 +1,21 @@
-[]
+- id: '1585440144639'
+  alias: Turn on entryway lights
+  description: Enable all the lights when the button is pressed, unless a light is
+    already turned on.
+  trigger:
+  - entity_id: light.entryway
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.living_room
+    state: 'off'
+  - condition: state
+    entity_id: light.tv_backlight
+    state: 'off'
+  - condition: state
+    entity_id: light.kitchen
+    state: 'off'
+  action:
+  - scene: scene.luci_ingresso
