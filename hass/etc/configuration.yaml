@@ -22,16 +22,6 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-# Google Assistant
-google_assistant:
-  project_id: !secret google_project_id
-  service_account: !include google/service_account.json
-  report_state: true
-  exposed_domains:
-    - light
-    - climate
-    - scene
-
 # KNX Integration
 knx: !include integrations/knx.yaml
 light: !include integrations/knx_lights.yaml
