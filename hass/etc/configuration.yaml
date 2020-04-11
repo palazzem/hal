@@ -40,3 +40,9 @@ light: !include integrations/knx_lights.yaml
 device_tracker:
   - platform: ping
     hosts: !include hosts.yaml
+
+# Export Data
+datadog:
+  host: localhost
+  port: 8125
+  prefix: testing.hal
