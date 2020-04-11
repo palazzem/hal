@@ -25,3 +25,8 @@ http:
         servers:
           # 172.17.0.1 is the `docker0` interface
           - url: 'http://172.17.0.1:8123'
+
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
