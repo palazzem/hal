@@ -14,6 +14,7 @@ services:
       # Use Letsencrypt and an internal Root CA for self-signed certificates (mkcert)
       - --serversTransport.rootCAs=/certs/rootCA.pem
       - --certificatesResolvers.le.acme.email=${ACME_EMAIL}
+      - --certificatesResolvers.le.acme.keyType=EC256
       - --certificatesResolvers.le.acme.storage=/acme.json
       - --certificatesResolvers.le.acme.tlschallenge=true
     ports:
