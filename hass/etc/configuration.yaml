@@ -3,6 +3,14 @@ default_config:
 
 homeassistant:
   customize: !include customize.yaml
+  name: Home
+  unit_system: metric
+  time_zone: Europe/Rome
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: !secret home_elevation
+
+zone: !include zones.yaml
 
 # Text to speech
 tts:
@@ -27,3 +35,14 @@ google_assistant:
 # KNX Integration
 knx: !include integrations/knx.yaml
 light: !include integrations/knx_lights.yaml
+
+# Device Trackers
+device_tracker:
+  - platform: ping
+    hosts: !include hosts.yaml
+
+# Export Data
+datadog:
+  host: localhost
+  port: 8125
+  prefix: testing.hal

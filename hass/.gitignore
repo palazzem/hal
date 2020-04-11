@@ -12,6 +12,8 @@ ip_bans.yaml
 secrets.yaml
 known_devices.yaml
 service_account.json
+hosts.yaml
+zones.yaml
 
 # Logs
 *.log
