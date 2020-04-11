@@ -26,9 +26,14 @@ jobs:
         run: |
           mkdir hass/etc/google/
           touch hass/etc/customize.yaml
+          touch hass/etc/hosts.yaml
+          touch hass/etc/zones.yaml
           echo 'google_project_id: dummy' >> hass/etc/secrets.yaml
           echo 'knx_ip: 10.0.0.1' >> hass/etc/secrets.yaml
           echo 'local_ip: 10.0.0.1' >> hass/etc/secrets.yaml
+          echo 'home_latitude: 42.0' >> hass/etc/secrets.yaml
+          echo 'home_longitude: 42.0' >> hass/etc/secrets.yaml
+          echo 'home_elevation: 42' >> hass/etc/secrets.yaml
           echo '{"client_email": "dummy@account.com", "private_key": "secret"}' > hass/etc/google/service_account.json
       
       - name: Check configuration
