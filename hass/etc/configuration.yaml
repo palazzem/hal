@@ -22,15 +22,18 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-# Google Assistant
-google_assistant:
-  project_id: !secret google_project_id
-  service_account: !include google/service_account.json
-  report_state: true
-  exposed_domains:
-    - light
-    - climate
-    - scene
+# Alexa
+alexa:
+  smart_home:
+    locale: it-IT
+    endpoint: https://api.eu.amazonalexa.com/v3/events
+    client_id: !secret alexa_client_id
+    client_secret: !secret alexa_client_secret
+    filter:
+      include_domains:
+        - light
+        - climate
+        - scene
 
 # KNX Integration
 knx: !include integrations/knx.yaml
