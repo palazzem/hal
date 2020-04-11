@@ -7,6 +7,7 @@ services:
     command:
       - --api.dashboard=false
       - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
       - --providers.file=true
       - --providers.file.filename=/etc/traefik/rules.yaml
       - --entryPoints.web.address=:80
@@ -38,6 +39,8 @@ services:
       - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.redirs.entrypoints=web"
       - "traefik.http.routers.redirs.middlewares=redirect-to-https"
+      # Datadog Agent Autodiscovery for Logs
+      - "com.datadoghq.ad.logs=[{\"source\": \"traefik\", \"service\": \"traefik-gateway\"}]"
 
   home-assistant:
     restart: always
@@ -51,4 +54,5 @@ services:
       - ${PWD}/etc:/config
     network_mode: host
     labels:
-      - "traefik.enable=false"
+      # Datadog Agent Autodiscovery for Logs
+      - "com.datadoghq.ad.logs=[{\"source\": \"home-assistant\", \"service\": \"hal\"}]"
