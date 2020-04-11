@@ -3,6 +3,14 @@ default_config:
 
 homeassistant:
   customize: !include customize.yaml
+  name: Home
+  unit_system: metric
+  time_zone: Europe/Rome
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: !secret home_elevation
+
+zone: !include zones.yaml
 
 # Text to speech
 tts:
