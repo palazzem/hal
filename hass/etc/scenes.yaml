@@ -1,3 +1,23 @@
+- id: '1585436705288'
+  name: Film
+  entities:
+    light.entryway:
+      friendly_name: Ingresso
+      state: 'off'
+      supported_features: 0
+    light.kitchen:
+      friendly_name: Cucina
+      state: 'off'
+      supported_features: 0
+    light.living_room:
+      friendly_name: Sala
+      state: 'off'
+      supported_features: 0
+    light.tv_backlight:
+      brightness: 2
+      friendly_name: TV Backlight
+      state: 'on'
+      supported_features: 1
 - id: '1585440059331'
   name: (Automation) Entryway Lights
   entities:
