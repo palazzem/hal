@@ -35,3 +35,8 @@ google_assistant:
 # KNX Integration
 knx: !include integrations/knx.yaml
 light: !include integrations/knx_lights.yaml
+
+# Device Trackers
+device_tracker:
+  - platform: ping
+    hosts: !include hosts.yaml
