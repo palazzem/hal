@@ -31,8 +31,9 @@ alexa:
     client_secret: !secret alexa_client_secret
     filter:
       include_domains:
-        - light
         - climate
+        - input_boolean
+        - light
         - scene
 
 # KNX Integration
