@@ -1,47 +1,5 @@
 version: '3.7'
 services:
-  traefik:
-    restart: always
-    image: traefik:v2.2.1
-    container_name: "traefik"
-    command:
-      - --api.dashboard=false
-      - --providers.docker=true
-      - --providers.docker.exposedByDefault=false
-      - --providers.file=true
-      - --providers.file.filename=/etc/traefik/rules.yaml
-      - --entryPoints.web.address=:80
-      - --entryPoints.websecure.address=:443
-      # Use Letsencrypt and an internal Root CA for self-signed certificates (mkcert)
-      - --serversTransport.rootCAs=/certs/rootCA.pem
-      - --certificatesResolvers.le.acme.email=${ACME_EMAIL}
-      - --certificatesResolvers.le.acme.keyType=EC256
-      - --certificatesResolvers.le.acme.storage=/acme.json
-      - --certificatesResolvers.le.acme.tlschallenge=true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      # Letsencrypt and custom Root CA certificates mounts
-      - ${PWD}/acme.json:/acme.json
-      - ${PWD}/certs/:/certs/
-      - ${PWD}/rules.yaml:/etc/traefik/rules.yaml
-    environment:
-      - ACME_EMAIL
-      - HAL_FQDN
-      - RATTLESTAR_FQDN
-      - RATTLESTAR_LOCAL_FQDN
-    labels:
-      # Middleware redirect
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # Catch-all redirect to HTTPS
-      - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.redirs.entrypoints=web"
-      - "traefik.http.routers.redirs.middlewares=redirect-to-https"
-      # Datadog Agent Autodiscovery for Logs
-      - "com.datadoghq.ad.logs=[{\"source\": \"traefik\", \"service\": \"traefik-gateway\"}]"
-
   home-assistant:
     restart: always
     container_name: hal
