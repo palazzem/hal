@@ -1,5 +1,5 @@
 - id: '1585436705288'
-  name: Film
+  name: Movie
   entities:
     light.entryway:
       friendly_name: Ingresso
@@ -19,7 +19,7 @@
       state: 'on'
       supported_features: 1
 - id: '1585436756370'
-  name: Gioco
+  name: Gaming
   entities:
     light.entryway:
       friendly_name: Ingresso
@@ -38,12 +38,12 @@
       friendly_name: TV Backlight
       state: 'on'
       supported_features: 1
-- id: '1585440059331'
-  name: (Automation) Entryway Lights
+- id: '1585506531123'
+  name: Dinner
   entities:
     light.entryway:
       friendly_name: Ingresso
-      state: 'on'
+      state: 'off'
       supported_features: 0
     light.kitchen:
       friendly_name: Cucina
@@ -54,26 +54,107 @@
       state: 'on'
       supported_features: 0
     light.tv_backlight:
+      brightness: 80
       friendly_name: TV Backlight
+      state: 'on'
+      supported_features: 1
+- id: '1586689153997'
+  name: Shutdown
+  entities:
+    climate.tado_smart_radiator_thermostat_va0315231488:
+      current_humidity: 47
+      current_temperature: 21.7
+      friendly_name: tado Smart Radiator Thermostat VA0315231488
+      hvac_action: idle
+      hvac_modes:
+      - 'off'
+      - heat
+      max_temp: 25
+      min_temp: 5
+      state: heat
+      supported_features: 1
+      temperature: 5
+    climate.tado_smart_radiator_thermostat_va1332416768:
+      current_humidity: 51
+      current_temperature: 21.9
+      friendly_name: tado Smart Radiator Thermostat VA1332416768
+      hvac_action: idle
+      hvac_modes:
+      - 'off'
+      - heat
+      max_temp: 25
+      min_temp: 5
+      state: heat
+      supported_features: 1
+      temperature: 5
+    climate.tado_smart_radiator_thermostat_va1886064896:
+      current_humidity: 52
+      current_temperature: 21.7
+      friendly_name: tado Smart Radiator Thermostat VA1886064896
+      hvac_action: idle
+      hvac_modes:
+      - 'off'
+      - heat
+      max_temp: 25
+      min_temp: 5
+      state: heat
+      supported_features: 1
+      temperature: 5
+    climate.tado_smart_radiator_thermostat_va2038894848:
+      current_humidity: 52
+      current_temperature: 21.5
+      friendly_name: tado Smart Radiator Thermostat VA2038894848
+      hvac_action: idle
+      hvac_modes:
+      - 'off'
+      - heat
+      max_temp: 25
+      min_temp: 5
+      state: heat
+      supported_features: 1
+      temperature: 5
+    climate.tado_smart_thermostat_ru1111297536:
+      current_humidity: 50
+      current_temperature: 22.4
+      friendly_name: tado Smart Thermostat RU1111297536
+      hvac_action: idle
+      hvac_modes:
+      - 'off'
+      - heat
+      max_temp: 25
+      min_temp: 5
+      state: heat
+      supported_features: 1
+      temperature: 5
+    light.bedroom:
+      friendly_name: Camera
+      state: 'off'
+      supported_features: 0
+    light.bedroom_backlight:
+      friendly_name: Camera Backlight
       state: 'off'
       supported_features: 1
-- id: '1585506531123'
-  name: Cena
-  entities:
+    light.corridor:
+      friendly_name: Corridoio
+      state: 'off'
+      supported_features: 0
     light.entryway:
       friendly_name: Ingresso
       state: 'off'
       supported_features: 0
+    light.guest_room:
+      friendly_name: Sala Ospiti
+      state: 'off'
+      supported_features: 0
     light.kitchen:
       friendly_name: Cucina
-      state: 'on'
+      state: 'off'
       supported_features: 0
     light.living_room:
       friendly_name: Sala
-      state: 'on'
+      state: 'off'
       supported_features: 0
     light.tv_backlight:
-      brightness: 2
       friendly_name: TV Backlight
-      state: 'on'
+      state: 'off'
       supported_features: 1
