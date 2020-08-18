@@ -24,11 +24,27 @@
   state_address: '0/0/4'
   name: 'Guest Room'
 - platform: knx
+  address: '0/0/17'
+  state_address: '0/0/18'
+  name: 'Guest Room Secondary'
+- platform: knx
+  address: '0/0/19'
+  state_address: '0/0/20'
+  name: 'Guest Bathroom'
+- platform: knx
   address: '0/0/1'
   state_address: '0/0/2'
   name: 'Bedroom'
+- platform: knx
+  address: '0/0/13'
+  state_address: '0/0/14'
+  name: 'Bedroom Sidelight'
 - platform: knx
   name: 'Bedroom Backlight'
   address: '0/3/0'
   state_address: '0/3/1'
   brightness_address: '0/3/2'
+- platform: knx
+  address: '0/0/15'
+  state_address: '0/0/16'
+  name: 'Bathroom'
