@@ -61,71 +61,86 @@
 - id: '1586689153997'
   name: Shutdown
   entities:
-    climate.tado_smart_radiator_thermostat_va0315231488:
-      current_humidity: 47
-      current_temperature: 21.7
-      friendly_name: tado Smart Radiator Thermostat VA0315231488
+    climate.camera:
+      current_humidity: 49.1
+      current_temperature: 28.4
+      friendly_name: Camera
       hvac_action: idle
       hvac_modes:
       - 'off'
+      - auto
       - heat
       max_temp: 25
       min_temp: 5
+      preset_mode: home
+      preset_modes:
+      - away
+      - home
       state: heat
-      supported_features: 1
+      supported_features: 17
+      target_temp_step: 1
       temperature: 5
-    climate.tado_smart_radiator_thermostat_va1332416768:
-      current_humidity: 51
-      current_temperature: 21.9
-      friendly_name: tado Smart Radiator Thermostat VA1332416768
+    climate.camera_ospiti:
+      current_humidity: 47.7
+      current_temperature: 28.7
+      friendly_name: Camera Ospiti
       hvac_action: idle
       hvac_modes:
       - 'off'
+      - auto
       - heat
       max_temp: 25
       min_temp: 5
+      preset_mode: home
+      preset_modes:
+      - away
+      - home
       state: heat
-      supported_features: 1
+      supported_features: 17
+      target_temp_step: 1
       temperature: 5
-    climate.tado_smart_radiator_thermostat_va1886064896:
-      current_humidity: 52
-      current_temperature: 21.7
-      friendly_name: tado Smart Radiator Thermostat VA1886064896
+    climate.corridoio:
+      current_humidity: 48.2
+      current_temperature: 28.7
+      friendly_name: Corridoio
       hvac_action: idle
       hvac_modes:
       - 'off'
+      - auto
       - heat
       max_temp: 25
       min_temp: 5
+      preset_mode: home
+      preset_modes:
+      - away
+      - home
       state: heat
-      supported_features: 1
+      supported_features: 17
+      target_temp_step: 0.1
       temperature: 5
-    climate.tado_smart_radiator_thermostat_va2038894848:
-      current_humidity: 52
-      current_temperature: 21.5
-      friendly_name: tado Smart Radiator Thermostat VA2038894848
+    climate.sala:
+      current_humidity: 50.8
+      current_temperature: 27.7
+      friendly_name: Sala
       hvac_action: idle
       hvac_modes:
       - 'off'
+      - auto
       - heat
       max_temp: 25
       min_temp: 5
+      preset_mode: home
+      preset_modes:
+      - away
+      - home
       state: heat
-      supported_features: 1
+      supported_features: 17
+      target_temp_step: 1
       temperature: 5
-    climate.tado_smart_thermostat_ru1111297536:
-      current_humidity: 50
-      current_temperature: 22.4
-      friendly_name: tado Smart Thermostat RU1111297536
-      hvac_action: idle
-      hvac_modes:
-      - 'off'
-      - heat
-      max_temp: 25
-      min_temp: 5
-      state: heat
-      supported_features: 1
-      temperature: 5
+    light.bathroom:
+      friendly_name: Bagno
+      state: 'off'
+      supported_features: 0
     light.bedroom:
       friendly_name: Camera
       state: 'off'
@@ -134,6 +149,10 @@
       friendly_name: Camera Backlight
       state: 'off'
       supported_features: 1
+    light.bedroom_sidelight:
+      friendly_name: Camera Parete
+      state: 'off'
+      supported_features: 0
     light.corridor:
       friendly_name: Corridoio
       state: 'off'
@@ -142,8 +161,16 @@
       friendly_name: Ingresso
       state: 'off'
       supported_features: 0
+    light.guest_bathroom:
+      friendly_name: Bagno Ospiti
+      state: 'off'
+      supported_features: 0
     light.guest_room:
-      friendly_name: Sala Ospiti
+      friendly_name: Camera Ospiti Faretti
+      state: 'off'
+      supported_features: 0
+    light.guest_room_secondary:
+      friendly_name: Camera Ospiti
       state: 'off'
       supported_features: 0
     light.kitchen:
