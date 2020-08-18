@@ -41,21 +41,18 @@
   condition: []
   action:
   - data: {}
-    entity_id: climate.tado_smart_thermostat_ru1111297536
+    entity_id: climate.corridoio
     service: climate.turn_on
   - data:
       hvac_mode: heat
       temperature: 24
-    entity_id: climate.tado_smart_thermostat_ru1111297536
+    entity_id: climate.corridoio
     service: climate.set_temperature
   - delay: 00:20:00
   - data:
       temperature: 5
-    entity_id: climate.tado_smart_thermostat_ru1111297536
+    entity_id: climate.corridoio
     service: climate.set_temperature
-  - data: {}
-    entity_id: climate.tado_smart_thermostat_ru1111297536
-    service: climate.turn_off
   - data: {}
     entity_id: input_boolean.bathroom_heating
     service: input_boolean.turn_off
