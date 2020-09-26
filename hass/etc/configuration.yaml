@@ -45,6 +45,12 @@ device_tracker:
   - platform: ping
     hosts: !include hosts.yaml
 
+# GameStream Service
+switch:
+  - platform: wake_on_lan
+    name: Gaming Station
+    mac: !secret gamestream_wol_mac
+
 # Export Data
 datadog:
   host: localhost
