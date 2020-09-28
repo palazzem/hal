@@ -38,6 +38,9 @@
       friendly_name: TV Backlight
       state: 'on'
       supported_features: 1
+    switch.gaming_station:
+      friendly_name: Gaming Station
+      state: 'on'
 - id: '1585506531123'
   name: Dinner
   entities:

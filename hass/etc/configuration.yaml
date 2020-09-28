@@ -50,6 +50,7 @@ switch:
   - platform: wake_on_lan
     name: Gaming Station
     mac: !secret gamestream_wol_mac
+    host: !secret gamestream_wol_host
 
 # Export Data
 datadog:
