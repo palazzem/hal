@@ -23,23 +23,37 @@
   entities:
     light.entryway:
       friendly_name: Ingresso
-      state: 'off'
       supported_features: 0
+      state: 'off'
     light.kitchen:
       friendly_name: Cucina
-      state: 'off'
       supported_features: 0
+      state: 'off'
     light.living_room:
       friendly_name: Sala
-      state: 'off'
       supported_features: 0
+      state: 'off'
     light.tv_backlight:
       brightness: 255
       friendly_name: TV Backlight
-      state: 'on'
       supported_features: 1
+      state: 'on'
     switch.gaming_station:
       friendly_name: Gaming Station
+      state: 'on'
+    media_player.tv:
+      source_list:
+      - HDMI 1
+      - HDMI 2
+      - HDMI 3
+      - HDMI 4
+      volume_level: 0.18
+      is_volume_muted: false
+      source: HDMI 3
+      sound_output: tv_speaker
+      friendly_name: TV
+      supported_features: 20413
+      device_class: tv
       state: 'on'
 - id: '1585506531123'
   name: Dinner
