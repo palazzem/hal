@@ -1,50 +1,38 @@
-- platform: knx
+- name: 'Entryway'
   address: '0/0/11'
   state_address: '0/0/12'
-  name: 'Entryway'
-- platform: knx
+- name: 'Living Room'
   address: '0/0/9'
   state_address: '0/0/10'
-  name: 'Living Room'
-- platform: knx
-  name: 'TV Backlight'
+- name: 'TV Backlight'
   address: '0/2/0'
   state_address: '0/2/1'
   brightness_address: '0/2/2'
-- platform: knx
+- name: 'Kitchen'
   address: '0/0/7'
   state_address: '0/0/8'
-  name: 'Kitchen'
-- platform: knx
+- name: 'Corridor'
   address: '0/0/5'
   state_address: '0/0/6'
-  name: 'Corridor'
-- platform: knx
+- name: 'Guest Room'
   address: '0/0/3'
   state_address: '0/0/4'
-  name: 'Guest Room'
-- platform: knx
+- name: 'Guest Room Secondary'
   address: '0/0/17'
   state_address: '0/0/18'
-  name: 'Guest Room Secondary'
-- platform: knx
+- name: 'Guest Bathroom'
   address: '0/0/19'
   state_address: '0/0/20'
-  name: 'Guest Bathroom'
-- platform: knx
+- name: 'Bedroom'
   address: '0/0/1'
   state_address: '0/0/2'
-  name: 'Bedroom'
-- platform: knx
+- name: 'Bedroom Sidelight'
   address: '0/0/13'
   state_address: '0/0/14'
-  name: 'Bedroom Sidelight'
-- platform: knx
-  name: 'Bedroom Backlight'
+- name: 'Bedroom Backlight'
   address: '0/3/0'
   state_address: '0/3/1'
   brightness_address: '0/3/2'
-- platform: knx
+- name: 'Bathroom'
   address: '0/0/15'
   state_address: '0/0/16'
-  name: 'Bathroom'

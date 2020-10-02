@@ -37,8 +37,12 @@ alexa:
         - scene
 
 # KNX Integration
-knx: !include integrations/knx.yaml
-light: !include integrations/knx_lights.yaml
+knx:
+  tunneling:
+    port: 3671
+    host: !secret knx_ip
+    local_ip: !secret local_ip
+  light: !include integrations/knx_lights.yaml
 
 # Device Trackers
 device_tracker:
