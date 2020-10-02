@@ -56,6 +56,14 @@ switch:
     mac: !secret gamestream_wol_mac
     host: !secret gamestream_wol_host
 
+webostv:
+  host: !secret tv_host
+  name: TV
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret tv_mac
+
 # Export Data
 datadog:
   host: localhost

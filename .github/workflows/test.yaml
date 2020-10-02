@@ -36,6 +36,8 @@ jobs:
           echo 'home_elevation: 42' >> hass/etc/secrets.yaml
           echo 'gamestream_wol_mac: bc:1f:a0:96:a5:f3' >> hass/etc/secrets.yaml
           echo 'gamestream_wol_host: 192.168.0.1' >> hass/etc/secrets.yaml
+          echo 'tv_mac: bc:1f:a0:96:a5:f3' >> hass/etc/secrets.yaml
+          echo 'tv_host: 192.168.0.1' >> hass/etc/secrets.yaml
       
       - name: Check configuration
         run: hass -c hass/etc/ --script check_config
