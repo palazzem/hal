@@ -21,36 +21,34 @@
 - id: '1585436756370'
   name: Gaming
   entities:
-    light.entryway:
-      friendly_name: Ingresso
-      supported_features: 0
-      state: 'off'
-    light.kitchen:
-      friendly_name: Cucina
-      supported_features: 0
-      state: 'off'
-    light.living_room:
-      friendly_name: Sala
-      supported_features: 0
-      state: 'off'
-    light.tv_backlight:
-      brightness: 255
-      friendly_name: TV Backlight
-      supported_features: 1
-      state: 'on'
     switch.gaming_station:
       friendly_name: Gaming Station
       state: 'on'
-    media_player.tv:
+    media_player.tv_2:
       source_list:
+      - Amazon Alexa
+      - Amazon Prime Video
+      - Apple TV
+      - Art Gallery
+      - CHILI
+      - DAZN
+      - Disney+
       - HDMI 1
       - HDMI 2
       - HDMI 3
       - HDMI 4
-      volume_level: 0.18
+      - LG Content Store
+      - Live TV
+      - Music
+      - NOW TV
+      - Netflix
+      - Photo & Video
+      - Rakuten TV
+      - Sports Alert
+      - Web Browser
       is_volume_muted: false
-      source: HDMI 3
-      sound_output: tv_speaker
+      source: HDMI 1
+      sound_output: tv_external_speaker
       friendly_name: TV
       supported_features: 20413
       device_class: tv
@@ -202,3 +200,87 @@
       friendly_name: TV Backlight
       state: 'off'
       supported_features: 1
+- id: '1601662012934'
+  name: Close Blinds
+  entities:
+    cover.bedroom_blinds:
+      current_position: 0
+      friendly_name: Camera
+      supported_features: 15
+      state: closed
+    cover.guest_bathroom_blinds:
+      current_position: 0
+      friendly_name: Bagno Ospiti
+      supported_features: 15
+      state: closed
+    cover.guest_room_blinds:
+      current_position: 0
+      friendly_name: Camera Ospiti
+      supported_features: 15
+      state: closed
+    cover.kitchen_blinds:
+      current_position: 0
+      friendly_name: Cucina
+      supported_features: 15
+      state: closed
+    cover.living_room_blinds:
+      current_position: 0
+      friendly_name: Sala
+      supported_features: 15
+      state: closed
+- id: '1601710424408'
+  name: Open Blinds
+  entities:
+    cover.bedroom_blinds:
+      current_position: 100
+      friendly_name: Camera
+      supported_features: 15
+      state: open
+    cover.guest_bathroom_blinds:
+      current_position: 100
+      friendly_name: Bagno Ospiti
+      supported_features: 15
+      state: open
+    cover.guest_room_blinds:
+      current_position: 100
+      friendly_name: Camera Ospiti
+      supported_features: 15
+      state: open
+    cover.kitchen_blinds:
+      current_position: 100
+      friendly_name: Cucina
+      supported_features: 15
+      state: open
+    cover.living_room_blinds:
+      current_position: 100
+      friendly_name: Sala
+      supported_features: 15
+      state: open
+- id: '1601710590531'
+  name: Blinds half
+  entities:
+    cover.bedroom_blinds:
+      current_position: 38
+      friendly_name: Camera
+      supported_features: 15
+      state: open
+    cover.guest_bathroom_blinds:
+      current_position: 58
+      friendly_name: Bagno Ospiti
+      supported_features: 15
+      state: open
+    cover.guest_room_blinds:
+      current_position: 75
+      friendly_name: Camera Ospiti
+      supported_features: 15
+      state: open
+    cover.kitchen_blinds:
+      current_position: 40
+      friendly_name: Cucina
+      supported_features: 15
+      state: open
+    cover.living_room_blinds:
+      current_position: 40
+      friendly_name: Sala
+      supported_features: 15
+      state: open
