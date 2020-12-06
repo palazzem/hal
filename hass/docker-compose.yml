@@ -3,7 +3,7 @@ services:
   home-assistant:
     restart: always
     container_name: hal
-    image: homeassistant/home-assistant:0.115.6
+    image: homeassistant/home-assistant:0.118.5
     environment:
       - TZ=Europe/Rome
       - UID=${UID}
