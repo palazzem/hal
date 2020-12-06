@@ -43,6 +43,7 @@ knx:
     host: !secret knx_ip
     local_ip: !secret local_ip
   light: !include integrations/knx_lights.yaml
+  cover: !include integrations/knx_blinds.yaml
 
 # Device Trackers
 device_tracker:
